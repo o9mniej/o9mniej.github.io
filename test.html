@@ -1,3 +1,37 @@
-<script>
-window.location = "roblox://placeId=6403373529";
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Join Roblox Game</title>
+
+  <script>
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    window.onload = function () {
+      const id = getParam("id");
+
+      if (!id) {
+        document.body.innerHTML = "<h2>No game id provided.</h2>";
+        return;
+      }
+
+      const robloxUrl = "roblox://placeId=" + id;
+
+      // auto launch
+      window.location.href = robloxUrl;
+
+      // fallback button
+      document.getElementById("joinBtn").href = robloxUrl;
+    };
+  </script>
+</head>
+
+<body style="font-family:sans-serif;text-align:center;margin-top:60px">
+  <h2>Launching Roblox…</h2>
+  <p>If nothing happens, click below:</p>
+  <a id="joinBtn">Join Game</a>
+</body>
+</html>
