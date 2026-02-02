@@ -4,38 +4,110 @@
   <meta charset="UTF-8" />
   <title>Join Roblox Server</title>
 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 40px;
+    }
+    .game-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .game-card {
+      width: 150px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .game-card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+    }
+    .game-card h4 {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+    .join-btn {
+      display: inline-block;
+      padding: 8px 15px;
+      background: #0066ff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-bottom: 8px;
+    }
+  </style>
+
   <script>
     function param(name) {
       return new URL(window.location.href).searchParams.get(name);
+    }
+
+    async function loadGames() {
+      const res = await fetch('games.txt');
+      const text = await res.text();
+      const lines = text.split('\n').filter(l => l.trim() !== '');
+      const grid = document.getElementById('gameGrid');
+
+      lines.forEach(line => {
+        const [id, name, thumb] = line.split('|');
+        const card = document.createElement("div");
+        card.className = "game-card";
+
+        const img = document.createElement("img");
+        img.src = thumb;
+
+        const title = document.createElement("h4");
+        title.innerText = name;
+
+        const btn = document.createElement("a");
+        btn.className = "join-btn";
+        btn.href = "roblox://placeId=" + id;
+        btn.innerText = "Play";
+
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(btn);
+        grid.appendChild(card);
+      });
     }
 
     window.onload = function () {
       const placeId = param("id");
       const serverId = param("serverid");
 
-      if (!placeId) {
-        document.body.innerHTML = "<h2>No placeId provided.</h2>";
+      // Auto-launch mode
+      if (placeId) {
+        let robloxUrl = "roblox://placeId=" + placeId;
+        if (serverId) robloxUrl += "&gameInstanceId=" + serverId;
+
+        document.getElementById("joinBtn").href = robloxUrl;
+        document.getElementById("joinBtn").style.display = "inline-block";
+        document.getElementById("status").innerText = "Launching Roblox…";
+        window.location.href = robloxUrl;
         return;
       }
 
-      let robloxUrl = "roblox://placeId=" + placeId;
-
-      if (serverId) {
-        robloxUrl += "&gameInstanceId=" + serverId;
-      }
-
-      // set fallback button
-      document.getElementById("joinBtn").href = robloxUrl;
-
-      // auto launch
-      window.location.href = robloxUrl;
+      // Dashboard mode
+      document.getElementById("dashboard").style.display = "block";
+      loadGames();
     };
   </script>
 </head>
 
-<body style="font-family:sans-serif;text-align:center;margin-top:60px">
-  <h2>Launching Roblox…</h2>
-  <p>If nothing happens, click below:</p>
-  <a id="joinBtn">Join Server</a>
+<body>
+  <h2 id="status">Welcome to Roblox Launcher</h2>
+  <a id="joinBtn" style="display:none;">Join Server</a>
+
+  <div id="dashboard" style="display:none;">
+    <h3>Recommended Games</h3>
+    <div id="gameGrid" class="game-grid"></div>
+  </div>
 </body>
 </html>
