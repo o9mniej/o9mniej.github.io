@@ -2,29 +2,33 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>Join Roblox Game</title>
+  <title>Join Roblox Server</title>
 
   <script>
-    function getParam(name) {
-      const url = new URL(window.location.href);
-      return url.searchParams.get(name);
+    function param(name) {
+      return new URL(window.location.href).searchParams.get(name);
     }
 
     window.onload = function () {
-      const id = getParam("id");
+      const placeId = param("id");
+      const serverId = param("serverid");
 
-      if (!id) {
-        document.body.innerHTML = "<h2>No game id provided.</h2>";
+      if (!placeId) {
+        document.body.innerHTML = "<h2>No placeId provided.</h2>";
         return;
       }
 
-      const robloxUrl = "roblox://placeId=" + id;
+      let robloxUrl = "roblox://placeId=" + placeId;
+
+      if (serverId) {
+        robloxUrl += "&gameInstanceId=" + serverId;
+      }
+
+      // set fallback button
+      document.getElementById("joinBtn").href = robloxUrl;
 
       // auto launch
       window.location.href = robloxUrl;
-
-      // fallback button
-      document.getElementById("joinBtn").href = robloxUrl;
     };
   </script>
 </head>
@@ -32,6 +36,6 @@
 <body style="font-family:sans-serif;text-align:center;margin-top:60px">
   <h2>Launching Roblox…</h2>
   <p>If nothing happens, click below:</p>
-  <a id="joinBtn">Join Game</a>
+  <a id="joinBtn">Join Server</a>
 </body>
 </html>
