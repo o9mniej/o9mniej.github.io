@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ForsAnim</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #1a0000, #000);
+  color: white;
+  text-align: center;
+}
+
+/* HEADER */
+header {
+  padding: 100px 20px;
+}
+
+h1 {
+  font-size: 4em;
+  color: #ff2e2e;
+  text-shadow: 0 0 20px #ff000080;
+}
+
+p {
+  color: #bbb;
+  font-size: 1.2em;
+}
+
+/* BUTTON */
+#script-btn {
+  padding: 15px 35px;
+  background: linear-gradient(45deg, #ff0000, #990000);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 25px #ff000060;
+  transition: 0.3s;
+}
+
+#script-btn:hover {
+  transform: scale(1.05);
+}
+
+/* TERMINAL */
+.terminal {
+  background: #050505;
+  border: 1px solid #ff000040;
+  border-radius: 12px;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: left;
+  font-family: monospace;
+  color: #ff4d4d;
+}
+
+/* SCRIPT BOX */
+.script-box {
+  animation: fadeIn 0.4s forwards;
+}
+
+textarea {
+  width: 96.5%;
+  height: 140px;
+  background: black;
+  color: #ff4d4d;
+  border: none;
+  resize: none;
+  padding: 10px;
+}
+
+/* COPY BUTTON */
+.copy-btn {
+  margin-top: 10px;
+  padding: 8px 15px;
+  background: #ff0000;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* POPUP */
+.popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff0000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  opacity: 0;
+  animation: pop 1.5s forwards;
+}
+
+/* FEATURES / SECTIONS */
+.section {
+  padding: 70px 20px;
+  text-align: center;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.card {
+  background: #140000;
+  padding: 25px;
+  border-radius: 15px;
+  width: 260px;
+  transition: 0.2s;
+  box-shadow: 0 0 15px #ff000020;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px #ff000050;
+}
+
+h2 {
+  color: #ff4d4d;
+}
+
+/* IMAGE GALLERY */
+.gallery {
+  padding: 60px 20px;
+}
+
+.gallery img {
+  width: 320px;
+  border-radius: 10px;
+  margin: 10px;
+  box-shadow: 0 0 20px #ff000040;
+  transition: 0.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+/* ANIMATIONS */
+@keyframes pop {
+  0% { opacity: 0; transform: translateY(20px); }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(20px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ForsAnim</h1>
+  <p>Animation override script for Forsaken</p>
+
+  <div id="script-container">
+    <button id="script-btn" onclick="startLoader()">Get Script</button>
+  </div>
+</header>
+
+<!-- FEATURES -->
+<section class="section">
+  <h2>Features</h2>
+  <div class="features">
+    <div class="card">
+      <h3>Animation Replace</h3>
+      <p>Swap animations with custom ones in real-time.</p>
+    </div>
+    <div class="card">
+      <h3>Character Testing</h3>
+      <p>Preview animations across different characters.</p>
+    </div>
+    <div class="card">
+      <h3>Lightweight</h3>
+      <p>Fast and minimal script execution.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section">
+  <h2>About</h2>
+  <p>ForsAnim is a simple script designed for experimenting with animations in Forsaken. 
+  Replace animations, preview them on different characters, and test custom setups safely.</p>
+</section>
+
+<!-- IMAGE GALLERY -->
+<section class="gallery">
+  <h2>GUI Preview</h2>
+  <!-- Replace src with your GUI images -->
+  <img src="image1.png">
+  <img src="image2.png">
+  <img src="image3.png">
+</section>
+
+<!-- ISSUE -->
+<section class="section">
+  <h2>Issues</h2>
+  <p>ForsAnim has an issue were 
+  <strong>you cant see the animations on the client it self, but everyone else can see them</strong>
+  i will try to fix it as soon as possible</p>
+</section>
+
+<!-- DISCLAIMER -->
+<section class="section">
+  <h2>Disclaimer</h2>
+  <p>
+    Use responsibly in a safe testing environment. 
+    ForsAnim does not modify Roblox files directly, but using it may violate game rules. 
+    <strong>I'm not responsible if your account is banned or penalized.</strong>
+  </p>
+</section>
+
+<script>
+function startLoader() {
+  const container = document.getElementById("script-container");
+
+  container.innerHTML = `
+    <div class="terminal" id="terminal"></div>
+  `;
+
+  const lines = [
+    "Initializing ForsAnim...",
+    "Loading modules...",
+    "Applying animation hooks...",
+    "Preparing script...",
+    "Done."
+  ];
+
+  let i = 0;
+  const term = document.getElementById("terminal");
+
+  function typeLine() {
+    if (i < lines.length) {
+      term.innerHTML += lines[i] + "<br>";
+      i++;
+      setTimeout(typeLine, 500);
+    } else {
+      showScript();
+    }
+  }
+
+  typeLine();
+}
+
+function showScript() {
+  const container = document.getElementById("script-container");
+
+  container.innerHTML = `
+    <div class="terminal script-box">
+      <textarea id="script-text" readonly>
+// Credit goes to o9mniej for hosting the loader
+loadstring(game:HttpGet("https://raw.githubusercontent.com/o9mniej/ForsAnim/main/ForsAnim.lua"))()
+      </textarea>
+      <button class="copy-btn" onclick="copyScript()">Copy</button>
+    </div>
+  `;
+}
+
+function copyScript() {
+  const text = document.getElementById("script-text");
+  text.select();
+  document.execCommand("copy");
+
+  const popup = document.createElement("div");
+  popup.className = "popup";
+  popup.innerText = "Copied!";
+  document.body.appendChild(popup);
+
+  setTimeout(() => popup.remove(), 1500);
+}
+</script>
+
+<footer>
+  <p>2026 Nuvex9</p>
+</footer>
+
+</body>
+</html>
